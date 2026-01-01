@@ -3,6 +3,7 @@ import cors from "cors";
 import simpleGit from "simple-git";
 import { mkdir, readdir, readFile, rm } from "fs/promises";
 import { join } from "path";
+import { generateInterviewKit } from "./services/aiService";
 
 const app = express();
 app.use(cors());
@@ -11,10 +12,7 @@ app.use(express.json());
 const VALID_EXTENSIONS = [".ts", ".tsx", ".js", ".jsx"];
 const IGNORE_DIRS = ["node_modules", ".git", "dist", "build", ".next"];
 
-/**
- * Recursively collects file paths for .ts, .tsx, .js, .jsx files.
- * Skips node_modules, .git, dist, build, .next.
- */
+
 async function getFiles(dirPath: string, basePath: string = dirPath): Promise<string[]> {
   const entries = await readdir(dirPath, { withFileTypes: true });
   const files: string[] = [];
@@ -64,13 +62,14 @@ app.post("/analyze", async (req, res) => {
     }
 
     const fullCodeString = parts.join("\n");
-    const totalCharCount = fullCodeString.length;
+
+    const interviewKit = await generateInterviewKit(fullCodeString);
 
     await rm(clonePath, { recursive: true, force: true });
 
-    res.json({ fullCodeString, totalCharCount });
+    res.json(interviewKit);
   } catch (err) {
-    await rm(clonePath, { recursive: true, force: true }).catch(() => {});
+    await rm(clonePath, { recursive: true, force: true }).catch(() => { });
     res.status(500).json({
       error: err instanceof Error ? err.message : "Failed to analyze repository",
     });
