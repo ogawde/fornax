@@ -33,15 +33,34 @@ Look for 'Happy Path' coding where errors aren't handled.
 
 Ignore minor TypeScript linting errors; focus on architectural and logical integrity.
 
-Formatting Requirement: Ensure the JSON response is clean. Do not include unnecessary spaces, mid-word line breaks, or special characters. Ensure the code_snapshot preserves original indentation (using \n and \t).`;
+Formatting Requirement: Ensure the JSON response is clean. Do not include unnecessary spaces, mid-word line breaks, or special characters. Ensure the code_snapshot preserves original indentation (using \n and \t).
+
+Output must be a SINGLE JSON object with this exact structure:
+{
+  "tech_stack": ["string"],
+  "interview_path": [
+    {
+      "type": "Architectural" | "Strategy" | "Implementation",
+      "question": "string",
+      "code_snapshot": "string",
+      "context_file": "string",
+      "ideal_answer": ["string"],
+      "counter_questions": ["string"],
+      "red_flags": ["string"]
+    }
+  ]
+}
+  
+CRITICAL: Your entire response must be a single JSON object. Do not return an array. Do not return a single question. Always use the key 'interview_path' for the questions array.`;
 
 export type InterviewQuestion = {
-  type: "Easy" | "Medium" | "Hard";
+  type: "Architectural" | "Strategy" | "Implementation";
   question: string;
   code_snapshot: string;
   context_file: string;
   ideal_answer: string;
   red_flags: string[];
+  counter_questions?: string[];
 };
 
 export type InterviewKit = {

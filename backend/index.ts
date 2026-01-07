@@ -5,6 +5,7 @@ import { mkdir, readdir, readFile, rm } from "fs/promises";
 import { join } from "path";
 import { generateInterviewKit } from "./services/aiService";
 
+
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -76,6 +77,8 @@ app.post("/analyze", async (req, res) => {
   }
 });
 
-app.listen(3001, () => {
-  console.log("GitProbe AI server running on http://localhost:3001");
+const PORT = Number(process.env.PORT) || 3001;
+
+app.listen(PORT, () => {
+  console.log(`fornax AI server running on http://localhost:${PORT}`);
 });
