@@ -2,10 +2,12 @@ FROM oven/bun:1
 
 WORKDIR /app
 
-COPY package.json bun.lock ./
+
+COPY package.json ./
 RUN bun install --production
 
 COPY . .
+
 
 ENV PORT=3001
 EXPOSE 3001
