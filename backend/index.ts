@@ -70,6 +70,7 @@ app.post("/analyze", async (req, res) => {
 
     res.json(interviewKit);
   } catch (err) {
+    console.error(err);
     await rm(clonePath, { recursive: true, force: true }).catch(() => { });
     res.status(500).json({
       error: err instanceof Error ? err.message : "Failed to analyze repository",

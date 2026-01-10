@@ -1,13 +1,14 @@
 FROM oven/bun:1
 
 WORKDIR /app
-
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends git \
+  && rm -rf /var/lib/apt/lists/*
 
 COPY package.json ./
 RUN bun install --production
 
 COPY . .
-
 
 ENV PORT=3001
 EXPOSE 3001
