@@ -22,7 +22,7 @@ export function KitPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#020617] text-white">
+    <div className="min-h-screen bg-black text-white">
       <Suspense fallback={<LoadingState />}>
         <DashboardView
           data={interviewData}

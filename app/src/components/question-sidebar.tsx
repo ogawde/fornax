@@ -1,3 +1,4 @@
+import { motion } from "motion/react";
 import { PhaseBadge } from "./phase-badge";
 import type { InterviewKit } from "../types";
 
@@ -16,25 +17,29 @@ export function QuestionSidebar({
     <aside className="w-72 shrink-0 border-r border-zinc-800 bg-zinc-900/50 p-4">
       <nav className="space-y-1">
         {data.interview_path?.map((q, i) => (
-          <button
-            key={i}
-            onClick={() => onSelectQuestion(i)}
-            className={`flex w-full items-start gap-2 rounded-lg px-3 py-2.5 text-left transition ${
-              i === activeIndex
-                ? "bg-emerald-500/10 text-emerald-100 ring-1 ring-emerald-500/30"
-                : "text-zinc-300 hover:bg-zinc-800 hover:text-white"
-            }`}
-          >
-            <span className="mt-0.5 text-xs font-medium text-zinc-500">
-              {i + 1}.
-            </span>
-            <div className="min-w-0 flex-1">
-              <div className="truncate text-sm">{q.question}</div>
-              <div className="mt-1">
-                <PhaseBadge phase={q.type} />
+          <motion.div key={i} layout className="relative">
+            <motion.button
+              onClick={() => onSelectQuestion(i)}
+              whileHover={i === activeIndex ? undefined : { x: 3, scale: 1.01 }}
+              whileTap={{ scale: 0.99 }}
+              transition={{ type: "spring", stiffness: 380, damping: 28 }}
+              className={`flex w-full items-start gap-2 rounded-lg px-3 py-2.5 text-left will-change-transform ${
+                i === activeIndex
+                  ? "bg-emerald-500/10 text-emerald-100 ring-1 ring-emerald-500/30"
+                  : "text-zinc-300 hover:bg-zinc-800/90 hover:text-white"
+              }`}
+            >
+              <span className="mt-0.5 text-xs font-medium text-zinc-500">
+                {i + 1}.
+              </span>
+              <div className="min-w-0 flex-1">
+                <div className="truncate text-sm">{q.question}</div>
+                <div className="mt-1">
+                  <PhaseBadge phase={q.type} />
+                </div>
               </div>
-            </div>
-          </button>
+            </motion.button>
+          </motion.div>
         ))}
       </nav>
       {(data?.tech_stack?.length ?? 0) > 0 && (
@@ -46,7 +51,7 @@ export function QuestionSidebar({
             {data.tech_stack.map((tech, i) => (
               <span
                 key={i}
-                className="rounded bg-zinc-700/50 px-2 py-0.5 text-xs text-zinc-300"
+                className="rounded border border-zinc-700/70 bg-zinc-700/50 px-2 py-0.5 text-xs text-zinc-300 transition hover:border-emerald-500/40 hover:bg-emerald-500/10 hover:text-emerald-200"
               >
                 {tech}
               </span>

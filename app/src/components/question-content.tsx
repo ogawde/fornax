@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { PhaseBadge } from "./phase-badge";
@@ -11,6 +12,7 @@ type QuestionContentProps = {
 
 export function QuestionContent({ question }: QuestionContentProps) {
   const [cheatSheetOpen, setCheatSheetOpen] = useState(false);
+  const [codeSnippetOpen, setCodeSnippetOpen] = useState(false);
 
   return (
     <div className="mx-auto max-w-4xl space-y-6">
@@ -30,21 +32,36 @@ export function QuestionContent({ question }: QuestionContentProps) {
       </div>
 
       {question.code_snapshot && (
-        <div className="overflow-hidden rounded-lg border border-zinc-700">
-          <SyntaxHighlighter
-            language="typescript"
-            style={oneDark}
-            customStyle={{
-              margin: 0,
-              borderRadius: 0,
-              background: "#18181b",
-              fontSize: "0.875rem",
-            }}
-            codeTagProps={{ style: { background: "transparent" } }}
-            showLineNumbers
+        <div className="rounded-lg border border-zinc-700 bg-zinc-800/50">
+          <button
+            onClick={() => setCodeSnippetOpen((open) => !open)}
+            className="flex w-full items-center justify-between px-4 py-3 text-left font-medium text-white transition hover:bg-zinc-700/50"
           >
-            {question.code_snapshot}
-          </SyntaxHighlighter>
+            View Code Snippet
+            {codeSnippetOpen ? (
+              <ChevronUp className="h-5 w-5" />
+            ) : (
+              <ChevronDown className="h-5 w-5" />
+            )}
+          </button>
+          {codeSnippetOpen && (
+            <div className="overflow-hidden border-t border-zinc-700">
+              <SyntaxHighlighter
+                language="typescript"
+                style={oneDark}
+                customStyle={{
+                  margin: 0,
+                  borderRadius: 0,
+                  background: "#18181b",
+                  fontSize: "0.875rem",
+                }}
+                codeTagProps={{ style: { background: "transparent" } }}
+                showLineNumbers
+              >
+                {question.code_snapshot}
+              </SyntaxHighlighter>
+            </div>
+          )}
         </div>
       )}
 
