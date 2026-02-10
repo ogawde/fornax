@@ -21,7 +21,13 @@ export function CheatSheetPanel({
         .filter(Boolean);
 
   return (
-    <div className="rounded-lg border border-zinc-700 bg-zinc-800/50">
+    <div
+      className={`rounded-lg border border-zinc-700 bg-zinc-800/50 transition-shadow duration-300 ${
+        isOpen
+          ? "shadow-[0_-10px_28px_rgba(59,130,246,0.24),0_12px_30px_rgba(59,130,246,0.32)]"
+          : "shadow-[0_-6px_20px_rgba(59,130,246,0.1),0_8px_22px_rgba(59,130,246,0.14)]"
+      }`}
+    >
       <button
         onClick={onToggle}
         className="flex w-full items-center justify-between px-4 py-3 text-left font-medium text-white transition hover:bg-zinc-700/50"

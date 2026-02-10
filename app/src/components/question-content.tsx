@@ -32,7 +32,13 @@ export function QuestionContent({ question }: QuestionContentProps) {
       </div>
 
       {question.code_snapshot && (
-        <div className="rounded-lg border border-zinc-700 bg-zinc-800/50">
+        <div
+          className={`rounded-lg border border-zinc-700 bg-zinc-800/50 transition-shadow duration-300 ${
+            codeSnippetOpen
+              ? "shadow-[0_-10px_28px_rgba(59,130,246,0.24),0_12px_30px_rgba(59,130,246,0.32)]"
+              : "shadow-[0_-6px_20px_rgba(59,130,246,0.1),0_8px_22px_rgba(59,130,246,0.14)]"
+          }`}
+        >
           <button
             onClick={() => setCodeSnippetOpen((open) => !open)}
             className="flex w-full items-center justify-between px-4 py-3 text-left font-medium text-white transition hover:bg-zinc-700/50"
@@ -73,7 +79,7 @@ export function QuestionContent({ question }: QuestionContentProps) {
       />
 
       {question.counter_questions && question.counter_questions.length > 0 && (
-        <div className="rounded-lg border border-zinc-700 bg-zinc-800/30 p-4">
+        <div className="rounded-lg border border-zinc-700 bg-zinc-800/30 p-4 shadow-[0_-8px_24px_rgba(59,130,246,0.16),0_10px_26px_rgba(59,130,246,0.24)]">
           <h3 className="mb-3 text-sm font-medium text-zinc-400">
             Follow-up Questions
           </h3>
