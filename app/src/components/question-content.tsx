@@ -5,6 +5,10 @@ import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { PhaseBadge } from "./phase-badge";
 import { CheatSheetPanel } from "./cheat-sheet-panel";
 import type { InterviewQuestion } from "../types";
+import {
+  buildGithubContextFileUrl,
+  REPO_URL_STORAGE_KEY,
+} from "../lib/github-context-link";
 
 type QuestionContentProps = {
   question: InterviewQuestion;
@@ -13,6 +17,13 @@ type QuestionContentProps = {
 export function QuestionContent({ question }: QuestionContentProps) {
   const [cheatSheetOpen, setCheatSheetOpen] = useState(false);
   const [codeSnippetOpen, setCodeSnippetOpen] = useState(false);
+  const repoUrl =
+    typeof window === "undefined"
+      ? null
+      : sessionStorage.getItem(REPO_URL_STORAGE_KEY);
+  const contextFileUrl = repoUrl
+    ? buildGithubContextFileUrl(repoUrl, question.context_file)
+    : null;
 
   return (
     <div className="mx-auto max-w-4xl space-y-6">
@@ -24,9 +35,21 @@ export function QuestionContent({ question }: QuestionContentProps) {
         {question.context_file && (
           <p className="mt-2 text-sm text-zinc-400">
             <span className="font-medium text-zinc-500">Context:</span>{" "}
-            <code className="rounded bg-zinc-800 px-1.5 py-0.5 font-mono text-zinc-300">
-              {question.context_file}
-            </code>
+            {contextFileUrl ? (
+              <a
+                href={contextFileUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded bg-zinc-800 px-1.5 py-0.5 font-mono text-zinc-300 underline-offset-2 transition hover:text-blue-300 hover:underline"
+                title="Open file on GitHub"
+              >
+                {question.context_file}
+              </a>
+            ) : (
+              <code className="rounded bg-zinc-800 px-1.5 py-0.5 font-mono text-zinc-300">
+                {question.context_file}
+              </code>
+            )}
           </p>
         )}
       </div>

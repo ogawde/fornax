@@ -3,6 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { HeroSection } from "../components";
 import { analyzeRepo } from "../api";
 import { normalizeInterviewData } from "../lib/normalize-interview-data";
+import {
+  normalizeGithubRepoUrl,
+  REPO_URL_STORAGE_KEY,
+} from "../lib/github-context-link";
 import { MultiStepLoader } from "../components/ui/multi-step-loader";
 import type { InterviewKit } from "../types";
 
@@ -22,11 +26,12 @@ export function LandingPage() {
   const navigate = useNavigate();
 
   const handleSubmit = async () => {
-    if (!repoUrl.trim() || loading) return;
+    const trimmedRepoUrl = repoUrl.trim();
+    if (!trimmedRepoUrl || loading) return;
     setLoading(true);
     setError(null);
     try {
-      const analyzePromise = analyzeRepo(repoUrl.trim());
+      const analyzePromise = analyzeRepo(trimmedRepoUrl);
       const minimumLoadingPromise = new Promise((resolve) => {
         setTimeout(
           resolve,
@@ -42,6 +47,14 @@ export function LandingPage() {
       ]);
 
       const interviewData = normalizeInterviewData(data) as InterviewKit;
+
+      const normalizedGithubRepoUrl = normalizeGithubRepoUrl(trimmedRepoUrl);
+      if (normalizedGithubRepoUrl) {
+        sessionStorage.setItem(REPO_URL_STORAGE_KEY, normalizedGithubRepoUrl);
+      } else {
+        sessionStorage.removeItem(REPO_URL_STORAGE_KEY);
+      }
+
       navigate("/kit", { state: { interviewData } });
     } catch (err) {
       setError(
