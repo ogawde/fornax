@@ -1,30 +1,56 @@
-# React + TypeScript + Vite
+# Fornax
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Fornax turns any GitHub repository into a context-aware technical questionnaire. It analyzes the codebase to generate practical, project-specific questions helping interviewers evaluate candidates faster and giving candidates a more realistic way to practice.
 
-Currently, two official plugins are available:
+## Live Link
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+[fornax.curr.xyz](https://fornax.curr.xyz)
 
-## Expanding the ESLint configuration
+## Preview
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+![Fornax Preview](./public/fornax.curr.xyz_.png)
 
-- Configure the top-level `parserOptions` property like this:
+## Features
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+- Interactive, responsive frontend built with React + Vite.
+- AI-ready backend service using Express and Google Generative AI SDK.
+- Git-powered automation support with `simple-git`.
+- Clean UI utilities with Tailwind CSS and component libraries.
+
+## Tech Stack
+
+- Frontend: TypeScript, React, Vite, Tailwind CSS, Radix UI, Shadcn UI
+- Backend: Bun, TypeScript, Node-style Express API
+- Integrations: OpenRouter API , Simple Git
+
+
+## Local Setup (Frontend + Backend)
+
+### 1) Clone the repository
+
+```bash
+git clone <your-repo-url>
+cd fornax
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### 2) Backend setup
+
+```bash
+cd backend
+bun install
+bun run index.ts
+```
+
+Backend runs on your configured API port.
+
+### 3) Frontend setup
+
+Open a new terminal:
+
+```bash
+cd app
+bun install
+bun run dev
+```
+
+Frontend runs on the Vite dev server (usually `http://localhost:5173`).
