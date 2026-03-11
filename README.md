@@ -26,14 +26,14 @@ Fornax turns any GitHub repository into a context-aware technical questionnaire.
 
 ## Local Setup (Frontend + Backend)
 
-### 1) Clone the repository
+### Clone the repository
 
 ```bash
 git clone <your-repo-url>
 cd fornax
 ```
 
-### 2) Backend setup
+### Backend setup
 
 ```bash
 cd backend
@@ -43,7 +43,7 @@ bun run index.ts
 
 Backend runs on your configured API port.
 
-### 3) Frontend setup
+### Frontend setup
 
 Open a new terminal:
 
